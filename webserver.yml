@@ -1,0 +1,23 @@
+---
+- hosts: done
+  become: yes
+  gather_facts: no
+  vars:
+    contentdetails:
+      - { name: 'all done' }
+  tasks:
+  - name: "Installing webserver"
+    yum: name="{{item}}" state=present
+    with_items:
+     - httpd
+  - name: Changing website contents
+    lineinfile:
+        dest: /var/www/html/index.html
+        state: present
+        regexp: "^%{{ item.name }}"
+        line: "%<body> {{ item.name }} </body>"
+    with_items: "{{ contentdetails }}"
+  - name: "Restart webserver"
+    service: name="{{item}}" state=restarted
+    with_items:
+     - httpd
