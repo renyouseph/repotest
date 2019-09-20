@@ -14,8 +14,8 @@
     lineinfile:
         dest: /var/www/html/index.html
         state: present
-        regexp: "^%{{ item.name }}"
-        line: "%<body> {{ item.name }} </body>"
+        regexp: "^{{ item.name }}"
+        line: "<body> {{ item.name }} </body>"
     with_items: "{{ contentdetails }}"
   - name: "Restart webserver"
     service: name="{{item}}" state=restarted
