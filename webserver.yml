@@ -4,7 +4,7 @@
   gather_facts: no
   vars:
     contentdetails:
-      - { name: 'all set for Jenkins' }
+      - { name: 'new update for Jenkins' }
   tasks:
   - name: "Installing webserver"
     yum: name="{{item}}" state=present
